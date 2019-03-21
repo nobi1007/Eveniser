@@ -1,18 +1,17 @@
 from tkinter import *
-#from events  import *
 from tkinter import font
 import csv
 import codecs
 
 
 def whichSelected () :
-    print("At %s of %d" % (select.curselection(), len(data)))
+    #print("At %s of %d" % (select.curselection(), len(data)))
     return int(select.curselection()[0])
 
 def addEntry () :
     na,rm,dt,ven = [nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get()]
     for i in data:
-        print(i)
+        #print(i)
         if dt in i and rm in i:
             messageBox.delete('1.0',END)
             messageBox.insert(END,"This event can not be registered. Either because of slot and venue might be clashing")
@@ -28,11 +27,20 @@ def addEntry () :
     setSelect ()
 
 def updateEntry() :
-    data[whichSelected()] = [nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get()]
+    try:
+        messageBox.delete('1.0',END)
+        messageBox.insert(END,"Your event "+nameVar.get()+" was updated")
+        messageBox.tag_add("start", "1.0", "1.100")
+        messageBox.tag_config("start", background="white", foreground="grey")
+        data[whichSelected()] = [nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get()]
+    except: IndexError
     setSelect ()
-
 def deleteEntry() :
     try:
+        messageBox.delete('1.0',END)
+        messageBox.insert(END,"Your event "+data[whichSelected()][0]+" at "+data[whichSelected()][3]+" was successfully deleted")
+        messageBox.tag_add("start", "1.0", "1.100")
+        messageBox.tag_config("start", background="white", foreground="blue")
         del data[whichSelected()]
     except: IndexError
     setSelect ()
@@ -73,11 +81,7 @@ def makeWindow () :
     but3.pack(side=LEFT,padx=35,pady=10)
     but4.pack(side=LEFT,padx=20,pady=10)
     buttonFrame.pack(side=TOP)
-
-    #e = tk.Entry(win,textvariable = v)
-    #e.pack()
     select.pack()
-
 
     frame1 = Frame(win)
     frame1.pack()
@@ -127,7 +131,7 @@ def makeWindow () :
     messageLabel = Label(frame4,text="Message Box")
     messageLabel.pack(padx=10,pady=10)
     messageBox = Text(frame4,height=3,width=50)
-    messageBox.insert(END,"j")
+    #messageBox.insert(END,"j")
     messageBox.pack(side = LEFT,padx=10,pady=10)
     return win
 
@@ -135,8 +139,6 @@ def sortAccord(copy):
     global l2
     l = [i.split() for i in select.get(0,END)]
     select.delete(0,END)
-    #print("\nThis is it\n")
-    #print(l,array)
     l2 = {}
     for i in l:
         x = i[copy].lower()
@@ -156,9 +158,8 @@ def setSelect() :
     for i in data:
         select.insert(END,"{:<20s}{:<20s}{:<20s}{:<20s}".format(i[0],i[1],i[2],i[3]))
 
-    #print(l2)
-
 #win.geometry("400x200")
 win = makeWindow()
+win.title("Eveniser")
 setSelect ()
 win.mainloop()
