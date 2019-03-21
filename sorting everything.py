@@ -6,18 +6,22 @@ import codecs
 def sortAccord(array,copy):
     l = [i.split() for i in array.get(0,6)]
     array.delete(0,6)
-    print("\nThis is it\n")
-    print(l,array)
+    #print("\nThis is it\n")
+    #print(l,array)
     l2 = {}
     for i in l:
-        l2[i[copy].lower()] = i
-        #print(i,new_i)
-    #print(l2)
+        x = i[copy].lower()
+        if x not in l2.keys():
+            l2[x] = [i]
+        else:
+            l2[x] += [i]
     
     l4 = list(sorted(l2.keys()))
     for i in l4:
-        array.insert(tk.END,"{:<20s}{:<20s}{:<20s}{:<20s}".format(l2[i][0],l2[i][1],l2[i][2],l2[i][3]))
-    
+        for j in range(len(l2[i])):
+            array.insert(tk.END,"{:<20s}{:<20s}{:<20s}{:<20s}".format(l2[i][j][0],l2[i][j][1],l2[i][j][2],l2[i][j][3]))
+    #print(l2)
+
 win = tk.Tk()
 #win.geometry("400x200")
 my_font = font.Font(family="Monaco", size=12)
