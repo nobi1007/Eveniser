@@ -6,11 +6,11 @@ def whichSelected () :
     return int(select.curselection()[0])
 
 def addEntry () :
-    phonelist.append ([nameVar.get(), phoneVar.get()])
+    phonelist.append ([nameVar.get(), eventVar.get(), dateVar.get(), venueVar.get()])
     setSelect ()
 
 def updateEntry() :
-    phonelist[whichSelected()] = [nameVar.get(), phoneVar.get()]
+    phonelist[whichSelected()] = [nameVar.get(), eventVar.get(), dateVar.get(), venueVar.get()]
     setSelect ()
 
 def deleteEntry() :
@@ -18,12 +18,14 @@ def deleteEntry() :
     setSelect ()
 
 def loadEntry  () :
-    name, phone = phonelist[whichSelected()]
+    name, event, date, venue  = phonelist[whichSelected()]
     nameVar.set(name)
-    phoneVar.set(phone)
+    eventVar.set(event)
+    dateVar.set(date)
+    venueVar.set(venue)
 
 def makeWindow () :
-    global nameVar, phoneVar, select
+    global nameVar, eventVar, dateVar, venueVar, select
     win = Tk()
 
     frame1 = Frame(win)
@@ -34,11 +36,21 @@ def makeWindow () :
     name = Entry(frame1, textvariable=nameVar)
     name.grid(row=0, column=1, sticky=W)
 
-    Label(frame1, text="Phone").grid(row=1, column=0, sticky=W)
-    phoneVar= StringVar()
-    phone= Entry(frame1, textvariable=phoneVar)
-    phone.grid(row=1, column=1, sticky=W)
+    Label(frame1, text="Event Type").grid(row=1, column=0, sticky=W)
+    eventVar= StringVar()
+    event= Entry(frame1, textvariable=eventVar)
+    event.grid(row=1, column=1, sticky=W)
 
+    Label(frame1, text="Date").grid(row=2, column=0, sticky=W)
+    dateVar = StringVar()
+    date = Entry(frame1, textvariable=dateVar)
+    date.grid(row=2, column=1, sticky=W)
+    
+    Label(frame1, text="Venue").grid(row=3, column=0, sticky=W)
+    venueVar = StringVar()
+    venue = Entry(frame1, textvariable=venueVar)
+    venue.grid(row=3, column=1, sticky=W)
+    
     frame2 = Frame(win)       # Row of buttons
     frame2.pack()
     b1 = Button(frame2,text=" Add  ",command=addEntry)
@@ -60,7 +72,7 @@ def makeWindow () :
 def setSelect () :
     phonelist.sort()
     select.delete(0,END)
-    for name,phone in phonelist :
+    for name,event, date,venue  in phonelist :
         select.insert (END, name)
 
 win = makeWindow()
