@@ -1,24 +1,24 @@
 from tkinter import *
-from phones  import *
+from events  import *
 
 def whichSelected () :
-    print("At %s of %d" % (select.curselection(), len(phonelist)))
+    print("At %s of %d" % (select.curselection(), len(eventlist)))
     return int(select.curselection()[0])
 
 def addEntry () :
-    phonelist.append ([nameVar.get(), eventVar.get(), dateVar.get(), venueVar.get()])
+    eventlist.append ([nameVar.get(), eventVar.get(), dateVar.get(), venueVar.get()])
     setSelect ()
 
 def updateEntry() :
-    phonelist[whichSelected()] = [nameVar.get(), eventVar.get(), dateVar.get(), venueVar.get()]
+    eventlist[whichSelected()] = [nameVar.get(), eventVar.get(), dateVar.get(), venueVar.get()]
     setSelect ()
 
 def deleteEntry() :
-    del phonelist[whichSelected()]
+    del eventlist[whichSelected()]
     setSelect ()
 
 def loadEntry  () :
-    name, event, date, venue  = phonelist[whichSelected()]
+    name, event, date, venue  = eventlist[whichSelected()]
     nameVar.set(name)
     eventVar.set(event)
     dateVar.set(date)
@@ -70,9 +70,9 @@ def makeWindow () :
     return win
 
 def setSelect () :
-    phonelist.sort()
+    eventlist.sort()
     select.delete(0,END)
-    for name,event, date,venue  in phonelist :
+    for name,event, date,venue  in eventlist :
         select.insert (END, name)
 
 win = makeWindow()
