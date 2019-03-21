@@ -126,7 +126,7 @@ def makeWindow () :
 
     messageLabel = Label(frame4,text="Message Box")
     messageLabel.pack(padx=10,pady=10)
-    messageBox = Text(frame4,height=3,width=30)
+    messageBox = Text(frame4,height=3,width=50)
     messageBox.insert(END,"j")
     messageBox.pack(side = LEFT,padx=10,pady=10)
     return win
