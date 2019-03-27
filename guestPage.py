@@ -46,12 +46,14 @@ def deleteEntry() :
     setSelect ()
 
 def loadEntry() :
-    name, rmtype, date, venue, rating  = data[whichSelected()]
-    nameVar.set(name)
-    rmtypeVar.set(rmtype)
-    dateVar.set(date)
-    venueVar.set(venue)
-    ratingVar.set(rating)
+    try:
+        name, rmtype, date, venue, rating  = data[whichSelected()]
+        nameVar.set(name)
+        rmtypeVar.set(rmtype)
+        dateVar.set(date)
+        venueVar.set(venue)
+        ratingVar.set(rating)
+    except: IndexError
 
 def back():
     win.destroy()
@@ -152,9 +154,9 @@ def makeWindow () :
     
     frame2 = Frame(frame12)       # Row of buttons
     frame2.grid(row=2,column=0)
-    b1 = Button(frame2,text=" Add  ",command=addEntry)
-    b2 = Button(frame2,text="Update",command=updateEntry)
-    b3 = Button(frame2,text="Delete",command=deleteEntry)
+    b1 = Button(frame2,text=" Add  ",command=addEntry,state="disabled")
+    b2 = Button(frame2,text="Update",command=updateEntry,state="disabled")
+    b3 = Button(frame2,text="Delete",command=deleteEntry,state="disabled")
     b4 = Button(frame2,text=" Load ",command=loadEntry)
     b1.pack(side=LEFT,padx=10,pady=20); b2.pack(side=LEFT,padx=10,pady=20)
     b3.pack(side=LEFT,padx=10,pady=20); b4.pack(side=LEFT,padx=10,pady=20)
@@ -207,3 +209,4 @@ wind.geometry("1000x700+300+50")
 wind.resizable(0,0)
 setSelect ()
 win.mainloop()
+

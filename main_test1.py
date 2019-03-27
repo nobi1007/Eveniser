@@ -15,7 +15,9 @@ def callRegister():
     sb.call("registration.py",shell=True)    
 
 def callGuest():
-    pass
+    global win
+    win.destroy()
+    sb.call("guestPage.py",shell=True)    
 
 win = Tk()
 win.title("Eveniser - Login")
@@ -39,9 +41,6 @@ f3.pack()
 Label(f3,text="\n").grid(row=3,column=1)
 b3 = Button(f3,text = "Guest", width="15",command = callGuest)
 b3.grid(row=4,column=1)
-
-
-
  
 win.mainloop()
 
