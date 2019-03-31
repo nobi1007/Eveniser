@@ -18,12 +18,12 @@ def addEntry () :
             messageBox.tag_add("start", "1.0", "1.100")
             messageBox.tag_config("start", background="white", foreground="red")
             break
-        else:
-            data.append ([nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get(),ratingVar.get()])
-            messageBox.delete('1.0',END)
-            messageBox.insert(END,"Your event "+nameVar.get()+" was successfully registered")
-            messageBox.tag_add("start", "1.0", "1.100")
-            messageBox.tag_config("start", background="white", foreground="green")
+    else:
+        data.append ([nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get(),ratingVar.get()])
+        messageBox.delete('1.0',END)
+        messageBox.insert(END,"Your event "+nameVar.get()+" was successfully registered")
+        messageBox.tag_add("start", "1.0", "1.100")
+        messageBox.tag_config("start", background="white", foreground="green")
     setSelect ()
 
 def updateEntry() :
@@ -32,7 +32,7 @@ def updateEntry() :
         messageBox.insert(END,"Your event "+nameVar.get()+" was updated")
         messageBox.tag_add("start", "1.0", "1.100")
         messageBox.tag_config("start", background="white", foreground="grey")
-        data[whichSelected()] = [nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get(),ratingVar.get()]
+        data[whichSelected()] = [nameVar.get(), rmtypeVar.get(), dateVar.get(), venueVar.get(), ratingVar.get()]
     except: IndexError
     setSelect ()
 def deleteEntry() :
