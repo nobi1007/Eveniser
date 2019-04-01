@@ -57,9 +57,30 @@ def back():
     win.destroy()
     sb.call("main_test1.py",shell=True)
 
+def searchIt():
+    messageBox.delete('1.0',END)
+    searchCounter = 0
+    tempSearchList = []
+    for i in searchData:
+        if searchName.get().strip() in i.lower() and searchName.get().strip()!="":
+            searchCounter += 1
+            tempSearchList.append(i)
+            #messageBox.insert(END,i+"\n")
+    if searchCounter>0:
+        messageBox.insert(END,"Possible Searches are:\n")
+        for i in range(len(tempSearchList)):
+            messageBox.insert(END,str(i+1)+"- "+tempSearchList[i]+"\n")
+            messageBox.tag_config("start", background="white", foreground="black")
+    else:
+        messageBox.insert(END,"Invalid Search")
+        messageBox.tag_config("start", background="white", foreground="red")
+    messageBox.tag_add("start", "1.0", "1.300")
+    
+
 def makeWindow () :
-    global nameVar, rmtypeVar, dateVar, venueVar, ratingVar, select, data, messageBox,win
+    global nameVar, rmtypeVar, dateVar, venueVar, ratingVar, select, data, messageBox,win,searchData,searchName
     data=[]
+    searchData=[]
 
     win = Tk()
     Button(win,text=" BACK ",command=back).pack(side=LEFT)
@@ -80,6 +101,7 @@ def makeWindow () :
     csvFile.close()
 
     for i in data:
+        searchData.append(i[0])
         select.insert(END,"{:<20s}{:<20s}{:<20s}{:<20s}{:<20s}".format(i[0],i[1],i[2],i[3],i[4]))
 
 
@@ -166,6 +188,13 @@ def makeWindow () :
     canvasLine2.pack(fill=BOTH,expand=1)
     canvasLine2.create_line(150,0,150,300)
 
+    searchLabel = Label(downFrame,text="> Search Bar <",font=("Bookman Old Style",15))
+    searchLabel.pack(padx=10,pady=10)
+    searchName = StringVar()
+    searchBar = Entry(downFrame,textvariable = searchName)
+    searchBar.pack()
+    Button(downFrame,text = "Search",command = searchIt,font=('Arial',10,'bold')).pack(pady=10)
+    
 
     frame4 = Frame(downFrame)     #message box label
     frame4.pack(side=LEFT,padx=80)
@@ -193,6 +222,24 @@ def sortAccord(copy):
     for i in l4:
         for j in range(len(l2[i])):
             select.insert(END,"{:<20s}{:<20s}{:<20s}{:<20s}{:<20s}".format(l2[i][j][0],l2[i][j][1],l2[i][j][2],l2[i][j][3],l2[i][j][4]))
+
+    messStr = ""
+    if copy==0:
+        messStr = "Name"
+    if copy==1:
+        messStr = "Room Type"
+    if copy==2:
+        messStr = "Date"
+    if copy==3:
+        messStr = "Venue"
+    if copy==4:
+        messStr = "Ratings"
+        
+    messageBox.delete('1.0',END)
+    messageBox.insert(END,"The items have been sorted on the basis of "+messStr)
+    messageBox.tag_add("start", "1.0", "1.100")
+    messageBox.tag_config("start", background="white", foreground="Green")
+            
 
 def setSelect() :
     data.sort()
